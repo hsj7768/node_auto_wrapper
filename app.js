@@ -1,5 +1,4 @@
 var fs = require('fs');
-var Regex = require('regex');
 var header = require('./makeHeader.js');
 var cpp = require('./makeCpp.js');
 
@@ -14,9 +13,9 @@ var type = file.split(".")[1];
 
 
 if (type == "h") {
-    header.make(file);
-} else if (type == "cpp") {
+    //header.make(file);
     cpp.make(file);
+} else if (type == "cpp") {
 } else {
     console.log("todo : " + type);
 }

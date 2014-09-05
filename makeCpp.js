@@ -1,5 +1,5 @@
 var fs = require('fs');
-var frameCppfile = "./FrameWrapper.cpp";
+var frameCppfile = "./FrameWrapper.cc";
 
 
 exports.make = function(target) {
@@ -10,7 +10,10 @@ exports.make = function(target) {
             var origin = wdata.toString();
             var className = origin.match(/class [aA-zZ]+/gm).toString();
             className = className.replace("class ", "");
-            var wrapFile = "./"+ className  +"Wrapper.h";
+            var wrapClass = className + "Wrapper";
+
+console.log("className : " + className);
+            var wrapFile = "./" + wrapClass + ".h";
 
 
             // extract string data
@@ -19,6 +22,7 @@ exports.make = function(target) {
             wrap = wrap.replace(new RegExp("\\FRAME", "g"), className.toUpperCase());
             wrap = wrap.replace(new RegExp("\\Frame", "g"), className.toLowerCase());
 
+console.log("--------------------");
 
             // extract public functions && make v8 function
             var wrapPublicFunc = "";
@@ -26,21 +30,34 @@ exports.make = function(target) {
             publicFunc.forEach(function(func, i) {
                 if (func && func.indexOf("explicit") < 0) {
                     func = func.trim();
-                    func = func.replace(/[aA-zZ]+\s/, "static Handle<Value> ");
+                    func = func.replace(/[aA-zZ]+\s/, "Handle<Value> " + wrapClass  + "::");
                     func = func.replace(/[(][aA-zZ\s=\d]*[)]/, "(const Arguments& args)");
                     wrapPublicFunc += "    ";
                     wrapPublicFunc += func;
                     wrapPublicFunc += "\n";
+                    wrapPublicFunc += "{\n";
+                    wrapPublicFunc += "    HandleScope scope;\n";
+                    wrapPublicFunc += "    " + wrapClass + "* obj = " + wrapClass + "::Unwrap<";
+                    wrapPublicFunc += wrapClass;
+                    wrapPublicFunc += ">(args.This());";
+                    wrapPublicFunc += 
+                }";
+console.log(i + " : " + func);
                 }
             });
 
+console.log("--------------------");
 
+/*
             wrap = wrap.replace(/private:/, "private\n" + wrapPublicFunc);
-
+*/
+//	    console.log(wrap);
+/*
             fs.writeFile(wrapFile, wrap, function (err) {
                 if (err) throw err;
                 console.log('It\'s saved!');
             });
+*/
         });
     });
 }

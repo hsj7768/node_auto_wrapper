@@ -6,6 +6,5 @@
         "start": "node app.js"
     },
     "dependencies": {
-        "regex":"0.1.1"
     }
 }
