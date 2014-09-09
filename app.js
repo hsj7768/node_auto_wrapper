@@ -13,7 +13,7 @@ var type = file.split(".")[1];
 
 
 if (type == "h") {
-    //header.make(file);
+    header.make(file);
     cpp.make(file);
 } else if (type == "cpp") {
 } else {

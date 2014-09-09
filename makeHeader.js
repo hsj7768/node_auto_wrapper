@@ -17,7 +17,7 @@ exports.make = function(target) {
             var wrap = data.toString();
             wrap = wrap.replace(new RegExp("\\Frame","g"), className);
             wrap = wrap.replace(new RegExp("\\FRAME", "g"), className.toUpperCase());
-            wrap = wrap.replace(new RegExp("\\Frame", "g"), className.toLowerCase());
+            wrap = wrap.replace(new RegExp("frame", "g"), className.toLowerCase());
 
 
             // extract public functions && make v8 function
@@ -39,7 +39,7 @@ exports.make = function(target) {
 
             fs.writeFile(wrapFile, wrap, function (err) {
                 if (err) throw err;
-                console.log('It\'s saved!');
+                console.log('Header File saved!');
             });
         });
     });
