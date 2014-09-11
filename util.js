@@ -1,8 +1,8 @@
 
 
 var replaceClassName = function replaceClassName(data, className) {
-    data = data.replace(new RegExp("\\Frame","g"), className);
-    data = data.replace(new RegExp("\\FRAME", "g"), className.toUpperCase());
+    data = data.replace(new RegExp("Frame","g"), className);
+    data = data.replace(new RegExp("FRAME", "g"), className.toUpperCase());
     data = data.replace(new RegExp("frame", "g"), className.toLowerCase());
 
     return data;

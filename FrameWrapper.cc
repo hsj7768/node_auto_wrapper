@@ -6,9 +6,9 @@ using namespace v8;
 Persistent<Function> FrameWrapper::constructor;
 
 
-FrameWrapper::FrameWrapper(int num)
+FrameWrapper::FrameWrapper()
 {
-    this->frame = new Frame(num);
+    this->frame = new Frame();
 }
 
 
@@ -38,8 +38,7 @@ Handle<Value> FrameWrapper::New(const Arguments& args)
     HandleScope scope;
 
     if(args.IsConstructCall()) {
-        int argvalue = (int)args[0]->ToInteger()->Value();
-        FrameWrapper* obj = new FrameWrapper(argvalue);
+        FrameWrapper* obj = new FrameWrapper();
         obj->Wrap(args.This());
 
         return args.This();

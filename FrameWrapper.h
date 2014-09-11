@@ -5,6 +5,7 @@
 #include <Frame.h>
 #include <node.h>
 
+using namespace ehr;
 using namespace node;
 using namespace v8;
 

@@ -18,7 +18,7 @@ exports.make = function(target, output) {
 
             // extract string data
             var wrap = data.toString();
-            util.replaceClassName(wrap, className);
+            wrap = util.replaceClassName(wrap, className);
 
 
             // extract public functions 
@@ -28,16 +28,15 @@ exports.make = function(target, output) {
 
             // make v8 function
             publicFunc.forEach(function(func, i) {
-                if (func && func.indexOf(className + "(") <= 0) {
+                if (func && func.trim() && func.indexOf(className + "(") <= 0) {
                     func = func.trim();
                     func = func.replace(/[aA-zZ]+\s/, "static Handle<Value> ");
                     func = func.replace(/[(][aA-zZ\s=\d]*[)]/, "(const Arguments& args)");
-                    wrapPublicFunc += "    ";
+                    wrapPublicFunc += "\n    ";
                     wrapPublicFunc += func;
-                    wrapPublicFunc += "\n";
                 }
             });
-            wrap = wrap.replace(/private:/, "private\n" + wrapPublicFunc);
+            wrap = wrap.replace(/private:/, "private:" + wrapPublicFunc);
 
 
             fs.writeFile("./" + output + "/" + wrapFile, wrap, function (err) {
