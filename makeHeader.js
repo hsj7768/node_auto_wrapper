@@ -10,7 +10,7 @@ exports.make = function(target) {
             var origin = wdata.toString();
             var className = origin.match(/class [aA-zZ]+/gm).toString();
             className = className.replace("class ", "");
-            var wrapFile = "./"+ className  +"Wrapper.h";
+            var wrapFile = className  +"Wrapper.h";
 
 
             // extract string data
@@ -37,9 +37,9 @@ exports.make = function(target) {
 
             wrap = wrap.replace(/private:/, "private\n" + wrapPublicFunc);
 
-            fs.writeFile(wrapFile, wrap, function (err) {
+            fs.writeFile("./" + wrapFile, wrap, function (err) {
                 if (err) throw err;
-                console.log('Header File saved!');
+                console.log('create ' + wrapFile);
             });
         });
     });
